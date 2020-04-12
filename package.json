@@ -1,0 +1,50 @@
+{
+  "name": "qqtools-mirai",
+  "version": "0.0.0",
+  "description": "基于mirai和mirai-api-http的QQ机器人客户端。",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "eslint": "eslint ./ --ext .js,.jsx,.ts,.tsx --fix",
+    "eslint:no-fix": "eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "update": "milktea update",
+    "update:dev": "milktea update --__DEV__"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "electron": "8.2.1",
+    "lerna": "^3.20.2",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@sweet-milktea/milktea": "^0.15.1",
+    "@sweet-milktea/milktea-cli": "^0.14.0",
+    "@sweet-milktea/util-tools": "^0.15.0",
+    "babel-eslint": "^11.0.0-beta.2",
+    "commitizen": "^4.0.4",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^7.0.0-alpha.3",
+    "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": "eslint"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

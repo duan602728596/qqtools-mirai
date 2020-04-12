@@ -1,0 +1,6 @@
+# node
+node_modules
+
+.sweet
+packages/**/lib
+packages/**/dist

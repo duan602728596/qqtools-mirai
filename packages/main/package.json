@@ -1,0 +1,8 @@
+{
+  "name": "@qqtools-mirai/main",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "rimraf lib && babel src --watch --out-dir lib --config-file ../../babel.node.config.js",
+    "build": "rimraf lib && babel src --out-dir lib --config-file ../../babel.node.config.js"
+  }
+}
