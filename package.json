@@ -4,8 +4,8 @@
   "description": "基于mirai和mirai-api-http的QQ机器人客户端。",
   "license": "AGPL-3.0",
   "scripts": {
-    "eslint": "eslint ./ --ext .js,.jsx,.ts,.tsx --fix",
-    "eslint:no-fix": "eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "eslint": "eslint ./ --fix",
+    "eslint:no-fix": "eslint ./",
     "update": "milktea update",
     "update:dev": "milktea update --__DEV__"
   },
@@ -40,7 +40,7 @@
     }
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": "eslint"
+    "**/*.{js,jsx}": "eslint"
   },
   "config": {
     "commitizen": {
