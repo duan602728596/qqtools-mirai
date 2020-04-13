@@ -7,3 +7,24 @@
       width: 100px
       flex-grow: 0
       flex-shrink: 0
+
+/* Add的布局 */
+.main
+  display: flex
+
+.schemaForm
+  flex-grow: 1
+
+  \:global(.schema-form-number-input)
+    width: 100% !important
+
+.help
+  margin-left: 8px
+  width: 316px
+  flex-shrink: 0
+
+  \:global(.ant-tabs-content)
+    padding-right: 16px !important
+
+.smallTitle
+  font-size: 12px

@@ -18,7 +18,9 @@ export default function(info) {
   const plugins = [
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
     ['import-components-style', {
-      components: { 'antd-schema-form': 'style/antd-schema-form.css' }
+      components: {
+        'antd-schema-form/es/SchemaForm': '~antd-schema-form/style/antd-schema-form.css'
+      }
     }]
   ];
 
@@ -45,7 +47,8 @@ export default function(info) {
     },
     externals: nodeExternals([
       'electron',
-      'got'
+      'got',
+      'url'
     ]),
     js: {
       plugins,
