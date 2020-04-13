@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import BilibiliLiveWorker from 'worker-loader!./bilibiliLive.worker';
 import { requestAuth, requestVerify, requestRelease } from './services/services';
 
 /* qq程序 */
@@ -9,6 +10,9 @@ class MiraiQQ {
     this.eventSocket = null;   // 事件的socket实例
     this.messageSocket = null; // 监听信息的socket实例
     this.session = null;       // session
+
+    // 监听相关
+    this.bilibiliLiveWorker = null; // B站直播监听
   }
 
   // 获取session
@@ -66,6 +70,7 @@ class MiraiQQ {
       if (!result) throw new Error('登陆失败！');
 
       this.initWebSocket();
+      // this.bilibiliLiveWorker = new BilibiliLiveWorker();
 
       return true;
     } catch (err) {

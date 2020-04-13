@@ -11,6 +11,7 @@
     "@ant-design/icons": "^4.0.6",
     "antd": "^4.1.2",
     "antd-schema-form": "^4.0.0",
+    "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "got": "^10.7.0",
     "immutable": "^4.0.0-rc.12",
@@ -37,6 +38,7 @@
     "@sweet-milktea/util-tools": "^0.15.0",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-import-components-style": "^0.1.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "worker-loader": "^2.0.0"
   }
 }
