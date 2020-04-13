@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 
 /**
  * 异步注入reducer的修饰器
@@ -12,16 +12,11 @@ function loadModels(models) {
    */
   return function(Module) {
     return function(props) {
-      // 异步注入reducer
-      function injectReducers() {
+      useMemo(function() {
         if (injectModels) {
           props.injectReducers?.(models);
           injectModels = false;
         }
-      }
-
-      useEffect(function() {
-        injectReducers();
       }, []);
 
       return <Module />;
