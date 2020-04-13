@@ -33,10 +33,39 @@ class MiraiQQ {
     }
   }
 
+  // 信息（message）监听
+  handleMsgSocketMessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    console.log(data);
+  };
+
+  // 事件（event）监听
+  handleEventSocketMessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    console.log(data);
+  };
+
+  // 初始化websocket
+  initWebSocket() {
+    const { basic } = this.config;
+
+    this.messageSocket = new WebSocket(`ws://localhost:${ basic.port }/message?sessionKey=${ this.session }`);
+    this.eventSocket = new WebSocket(`ws://localhost:${ basic.port }/event?sessionKey=${ this.session }`);
+
+    this.messageSocket.addEventListener('message', this.handleMsgSocketMessage, false);
+    this.eventSocket.addEventListener('message', this.handleEventSocketMessage, false);
+  }
+
   // 项目初始化
   async init() {
     try {
       const result = await this.getSession();
+
+      if (!result) throw new Error('登陆失败！');
+
+      this.initWebSocket();
 
       return true;
     } catch (err) {
@@ -48,10 +77,27 @@ class MiraiQQ {
 
   // 项目销毁
   async destroy() {
-    const { basic } = this.config;
-    const { data } = await requestRelease(basic.qqNumber, basic.port, this.session);
+    try {
+      const { basic } = this.config;
+      const { data } = await requestRelease(basic.qqNumber, basic.port, this.session); // 清除sessicon
 
-    return data.code === 0;
+      // 关闭websocket
+      if (this.messageSocket) {
+        this.messageSocket.close();
+        this.messageSocket = null;
+      }
+
+      if (this.eventSocket) {
+        this.eventSocket.close();
+        this.eventSocket = null;
+      }
+
+      return true;
+    } catch (err) {
+      console.error(err);
+
+      return false;
+    }
   }
 }
 

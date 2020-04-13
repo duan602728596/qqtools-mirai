@@ -53,7 +53,6 @@ function Index(props) {
       id: option.id,
       config: option.value
     });
-
     const result = await miraiQQ.init();
 
     if (result) {
