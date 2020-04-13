@@ -7,7 +7,7 @@ const { objectStore } = config.indexedDB;
 const optionsName = objectStore[0].name;
 const initData = {
   loginList: [], // 已登陆的列表
-  qqOptions: [] // qq配置列表
+  qqOptions: []  // qq配置列表
 };
 
 export const setLoginList = createAction('login/已登陆列表');
