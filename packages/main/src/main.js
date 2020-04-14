@@ -9,8 +9,8 @@ let win = null;
 /* 初始化 */
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true
     }
