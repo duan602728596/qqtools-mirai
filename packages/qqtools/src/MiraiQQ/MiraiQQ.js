@@ -1,6 +1,16 @@
 import { message } from 'antd';
+import nunjucks from 'nunjucks';
 import BilibiliLiveWorker from 'worker-loader!./bilibiliLive.worker';
-import { requestAuth, requestVerify, requestRelease } from './services/services';
+import {
+  requestAuth,
+  requestVerify,
+  requestRelease,
+  requestSendGroupMessage
+} from './services/services';
+
+nunjucks.configure({
+  autoescape: false
+});
 
 /* qq程序 */
 class MiraiQQ {
@@ -62,6 +72,34 @@ class MiraiQQ {
     this.eventSocket.addEventListener('message', this.handleEventSocketMessage, false);
   }
 
+  // bilibili直播的webworker监听
+  handleBilibiliWebWorkerMessage = async (event) => {
+    try {
+      const cfg = event.data.config;
+      const { basic } = this.config;
+      const msg = nunjucks.renderString(cfg.msgTemplate, { name: cfg.name });
+
+      await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msg);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // 初始化bilibili直播的webworker
+  initBilibiliWebWorker() {
+    const { bilibiliLive } = this.config;
+
+    if (bilibiliLive && bilibiliLive.length > 0) {
+      const liveConfig = bilibiliLive.filter((o) => o.use);
+
+      if (liveConfig.length > 0) {
+        this.bilibiliLiveWorker = new BilibiliLiveWorker();
+        this.bilibiliLiveWorker.addEventListener('message', this.handleBilibiliWebWorkerMessage, false);
+        this.bilibiliLiveWorker.postMessage({ config: liveConfig });
+      }
+    }
+  }
+
   // 项目初始化
   async init() {
     try {
@@ -70,7 +108,7 @@ class MiraiQQ {
       if (!result) throw new Error('登陆失败！');
 
       this.initWebSocket();
-      // this.bilibiliLiveWorker = new BilibiliLiveWorker();
+      this.initBilibiliWebWorker();
 
       return true;
     } catch (err) {
@@ -95,6 +133,11 @@ class MiraiQQ {
       if (this.eventSocket) {
         this.eventSocket.close();
         this.eventSocket = null;
+      }
+
+      if (this.bilibiliLiveWorker) {
+        this.bilibiliLiveWorker.terminate();
+        this.bilibiliLiveWorker = null;
       }
 
       return true;

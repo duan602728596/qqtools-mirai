@@ -52,7 +52,8 @@ export default function(info) {
     ]),
     resolve: {
       alias: Object.assign({
-        axios: 'axios/dist/axios.js'
+        axios: 'axios/dist/axios.js',
+        nunjucks: 'nunjucks/browser/nunjucks.js'
       }, isDev ? {
         'react-dom': '@hot-loader/react-dom'
       } : undefined)
