@@ -28,7 +28,7 @@ export default function(info) {
     plugins.unshift(['transform-react-remove-prop-types', { mode: 'remove', removeImport: true }]);
   }
 
-  const config = {
+  return {
     frame: 'react',
     dll: [
       'react',
@@ -50,6 +50,13 @@ export default function(info) {
       'got',
       'url'
     ]),
+    resolve: {
+      alias: Object.assign({
+        axios: 'axios/dist/axios.js'
+      }, isDev ? {
+        'react-dom': '@hot-loader/react-dom'
+      } : undefined)
+    },
     js: {
       plugins,
       ecmascript: true,
@@ -70,14 +77,4 @@ export default function(info) {
       { template: path.join(__dirname, 'src/index.pug') }
     ]
   };
-
-  if (isDev) {
-    config.resolve = {
-      alias: {
-        'react-dom': '@hot-loader/react-dom'
-      }
-    };
-  }
-
-  return config;
 }
