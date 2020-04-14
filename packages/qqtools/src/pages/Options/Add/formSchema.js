@@ -50,6 +50,50 @@ const schema = {
           $formItemProps
         }
       }
+    },
+    bilibiliLive: {
+      id: '$root/properties/bilibiliLive',
+      type: 'array',
+      title: 'B站直播配置',
+      description: '配置B站直播监听和推送',
+      maximum: 2,
+      items: {
+        id: '$root/properties/bilibiliLive/items',
+        type: 'object',
+        title: '直播配置',
+        properties: {
+          name: {
+            id: '$root/properties/bilibiliLive/items/properties/name',
+            type: 'string',
+            title: '直播间名称',
+            $required: true
+          },
+          id: {
+            id: '$root/properties/bilibiliLive/items/properties/id',
+            type: 'string',
+            title: '直播间ID',
+            $required: true,
+            $tableColumnHidden: true
+          },
+          msgTemplate: {
+            id: '$root/properties/bilibiliLive/items/properties/msgTemplate',
+            type: 'string',
+            title: '推送消息模版',
+            $required: true,
+            $componentType: 'textArea',
+            $defaultValue: '{{ name }} 在B站开启了直播。',
+            $tableColumnHidden: true
+          },
+          use: {
+            id: '$root/properties/bilibiliLive/items/properties/use',
+            type: 'boolean',
+            title: '开启推送',
+            $defaultValue: true,
+            $componentType: 'switch',
+            $tableColumnHidden: true
+          }
+        }
+      }
     }
   }
 };

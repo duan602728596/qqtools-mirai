@@ -6,7 +6,10 @@ import SchemaForm from 'antd-schema-form/es/SchemaForm';
 import {
   defaultString,
   defaultNumber,
-  defaultObject
+  defaultObject,
+  defaultArray,
+  textArea,
+  switchComponent
 } from 'antd-schema-form/es/components/custom/custom';
 import moment from 'moment';
 import style from './add.sass';
@@ -66,7 +69,10 @@ function Add(props) {
           customComponent={{
             defaultString,
             defaultNumber,
-            defaultObject
+            defaultObject,
+            defaultArray,
+            textArea,
+            switch: switchComponent
           }}
         />
       </div>
