@@ -1,6 +1,6 @@
 import { requestRoomInfo } from './services/worker';
 
-let status = [0, 0]; // 记录状态
+let status = null; // 记录状态
 let config = null; // 记录配置文件
 let timer = null;  // 轮询定时器
 
@@ -19,7 +19,7 @@ async function handleQueryTimer() {
   } catch (err) {
     console.error(err);
   }
-  
+
   timer = setTimeout(handleQueryTimer, 45000);
 }
 
