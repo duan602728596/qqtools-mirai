@@ -87,7 +87,8 @@ class MiraiQQ {
 
   // 初始化bilibili直播的webworker
   initBilibiliWebWorker() {
-    const { bilibiliLive } = this.config;
+    const { bilibili } = this.config;
+    const { bilibiliLive, time } = bilibili;
 
     if (bilibiliLive && bilibiliLive.length > 0) {
       const liveConfig = bilibiliLive.filter((o) => o.use);
@@ -95,7 +96,7 @@ class MiraiQQ {
       if (liveConfig.length > 0) {
         this.bilibiliLiveWorker = new BilibiliLiveWorker();
         this.bilibiliLiveWorker.addEventListener('message', this.handleBilibiliWebWorkerMessage, false);
-        this.bilibiliLiveWorker.postMessage({ config: liveConfig });
+        this.bilibiliLiveWorker.postMessage({ config: liveConfig, time });
       }
     }
   }

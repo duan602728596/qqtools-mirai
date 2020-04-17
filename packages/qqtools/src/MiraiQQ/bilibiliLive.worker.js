@@ -1,8 +1,9 @@
 import { requestRoomInfo } from './services/worker';
 
-let status = null; // 记录状态
-let config = null; // 记录配置文件
-let timer = null;  // 轮询定时器
+let status = null;        // 记录状态
+let config = null;        // 记录配置文件
+let intervalTime = 20000; // 轮询间隔时间
+let timer = null;         // 轮询定时器
 
 async function handleQueryTimer() {
   try {
@@ -20,7 +21,7 @@ async function handleQueryTimer() {
     console.error(err);
   }
 
-  timer = setTimeout(handleQueryTimer, 45000);
+  timer = setTimeout(handleQueryTimer, intervalTime);
 }
 
 async function init() {
@@ -32,10 +33,11 @@ async function init() {
     console.error(err);
   }
 
-  timer = setTimeout(handleQueryTimer, 45000);
+  timer = setTimeout(handleQueryTimer, intervalTime);
 }
 
 addEventListener('message', function(event) {
   config = event.data.config;
+  intervalTime = (event.data.time < 20 ? 20 : event.data.time) * 1000;
   init();
 }, false);
