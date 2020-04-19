@@ -5,7 +5,8 @@ import {
   requestAuth,
   requestVerify,
   requestRelease,
-  requestSendGroupMessage
+  requestSendGroupMessage,
+  requestInfoByRoom
 } from './services/services';
 
 nunjucks.configure({
@@ -77,7 +78,7 @@ class MiraiQQ {
     try {
       const cfg = event.data.config;
       const { basic } = this.config;
-      const msg = nunjucks.renderString(cfg.msgTemplate, { name: cfg.name });
+      const msg = nunjucks.renderString('B站直播通知：{{ name }} 在B站开启了直播。', { name: cfg.name });
 
       await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msg);
     } catch (err) {
@@ -86,18 +87,25 @@ class MiraiQQ {
   };
 
   // 初始化bilibili直播的webworker
-  initBilibiliWebWorker() {
-    const { bilibili } = this.config;
-    const { bilibiliLive, time } = bilibili;
+  async initBilibiliWebWorker() {
+    try {
+      const { bilibili } = this.config;
+      const { bilibiliLive, time } = bilibili;
 
-    if (bilibiliLive && bilibiliLive.length > 0) {
-      const liveConfig = bilibiliLive.filter((o) => o.use);
+      if (bilibiliLive && bilibiliLive.length > 0) {
+        const liveConfig = bilibiliLive.filter((o) => o.use);
 
-      if (liveConfig.length > 0) {
-        this.bilibiliLiveWorker = new BilibiliLiveWorker();
-        this.bilibiliLiveWorker.addEventListener('message', this.handleBilibiliWebWorkerMessage, false);
-        this.bilibiliLiveWorker.postMessage({ config: liveConfig, time });
+        if (liveConfig.length > 0) {
+          const infoResult = await Promise.all(liveConfig.map((item, index) => requestInfoByRoom(item.id))); // 获取信息
+          const info = infoResult.map((item, index) => item.data.data.anchor_info.base_info.uname);
+
+          this.bilibiliLiveWorker = new BilibiliLiveWorker();
+          this.bilibiliLiveWorker.addEventListener('message', this.handleBilibiliWebWorkerMessage, false);
+          this.bilibiliLiveWorker.postMessage({ config: liveConfig, time, info });
+        }
       }
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -109,7 +117,7 @@ class MiraiQQ {
       if (!result) throw new Error('登陆失败！');
 
       this.initWebSocket();
-      this.initBilibiliWebWorker();
+      await this.initBilibiliWebWorker();
 
       return true;
     } catch (err) {

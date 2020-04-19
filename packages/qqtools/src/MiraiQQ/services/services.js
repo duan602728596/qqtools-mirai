@@ -1,5 +1,7 @@
 import request from '../../utils/request';
 
+/* ================== QQ登陆相关 ================== */
+
 /**
  * 根据authKey获取session
  * @param { number } port: 端口号
@@ -57,6 +59,20 @@ export function requestSendGroupMessage(groupNumber, port, session, msg) {
       target: groupNumber,
       group: groupNumber,
       messageChain: [{ type: 'Plain', text: msg }]
+    }
+  });
+}
+
+/* ================== B站相关 ================== */
+
+/**
+ * 获取直播间的直播人信息
+ * @param { string } id: 直播间id
+ */
+export function requestInfoByRoom(id) {
+  return request(`https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=${ id }`, {
+    headers: {
+      Referer: `https://live.bilibili.com/${ id }`
     }
   });
 }
