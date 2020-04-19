@@ -61,8 +61,8 @@ const schema = {
           id: '$root/properties/bilibili/properties/time',
           type: 'number',
           title: '轮询间隔',
-          minimum: 20,
-          $defaultValue: 20
+          minimum: 30,
+          $defaultValue: 45
         },
         bilibiliLive: {
           id: '$root/properties/bilibili/properties/bilibiliLive',
@@ -120,8 +120,8 @@ const schema = {
           id: '$root/properties/weibo/properties/time',
           type: 'number',
           title: '轮询间隔',
-          minimum: 20,
-          $defaultValue: 20
+          minimum: 30,
+          $defaultValue: 45
         },
         container: {
           id: '$root/properties/weibo/properties/container',
