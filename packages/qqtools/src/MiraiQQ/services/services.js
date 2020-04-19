@@ -55,6 +55,7 @@ export function requestSendGroupMessage(groupNumber, port, session, msg) {
     json: {
       sessionKey: session,
       target: groupNumber,
+      group: groupNumber,
       messageChain: [{ type: 'Plain', text: msg }]
     }
   });
