@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import nunjucks from 'nunjucks';
 import BilibiliLiveWorker from 'worker-loader!./bilibiliLive.worker';
+import WeiboWorker from 'worker-loader!./weibo.worker';
 import {
   requestAuth,
   requestVerify,
@@ -24,6 +25,7 @@ class MiraiQQ {
 
     // 监听相关
     this.bilibiliLiveWorker = null; // B站直播监听
+    this.weiboWorker = null;        // 微博监听
   }
 
   // 获取session
@@ -109,6 +111,44 @@ class MiraiQQ {
     }
   }
 
+  // 微博的webworker监听
+  handleWeiboWebWorkerMessage = async (event) => {
+    const result = event.data.result;
+    const { basic } = this.config;
+
+    for (const item of result) {
+      const msg = nunjucks.renderString(`{{ name }} {{ time }}发送了一条微博：{{ text }}
+类型：{{ type }}
+地址：{{ scheme }}`, item);
+      const msgArr = [{ type: 'Plain', text: msg }];
+
+      if (item.pics.length > 0) {
+        msgArr.push({
+          type: 'Image',
+          url: item.pics[0]
+        });
+      }
+
+      await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msgArr);
+    }
+  };
+
+  // 初始化微博的webworker
+  initWeiboWebWorker() {
+    const { weibo } = this.config;
+    const { container, time } = weibo;
+
+    if (container && container.length > 0) {
+      const containerConfig = container.filter((o) => o.use);
+
+      if (containerConfig.length > 0) {
+        this.weiboWorker = new WeiboWorker();
+        this.weiboWorker.addEventListener('message', this.handleWeiboWebWorkerMessage, false);
+        this.weiboWorker.postMessage({ config: containerConfig, time });
+      }
+    }
+  }
+
   // 项目初始化
   async init() {
     try {
@@ -118,6 +158,7 @@ class MiraiQQ {
 
       this.initWebSocket();
       await this.initBilibiliWebWorker();
+      this.initWeiboWebWorker();
 
       return true;
     } catch (err) {
@@ -147,6 +188,11 @@ class MiraiQQ {
       if (this.bilibiliLiveWorker) {
         this.bilibiliLiveWorker.terminate();
         this.bilibiliLiveWorker = null;
+      }
+
+      if (this.weiboWorker) {
+        this.weiboWorker.terminate();
+        this.weiboWorker = null;
       }
 
       return true;

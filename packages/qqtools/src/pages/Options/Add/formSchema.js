@@ -148,7 +148,7 @@ const schema = {
                 $tableColumnHidden: true
               },
               use: {
-                id: '$root/properties/weibo/properties/bilibiliLive/items/properties/use',
+                id: '$root/properties/weibo/properties/container/items/properties/use',
                 type: 'boolean',
                 title: '开启推送',
                 $defaultValue: true,

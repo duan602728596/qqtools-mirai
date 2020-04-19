@@ -42,13 +42,16 @@ export function requestRelease(qq, port, session) {
 
 /**
  * 发送群消息
- * TODO: 会出现发送错误的提示（https://github.com/mamoe/mirai-api-http/issues/51）
+ * 文字消息：{ type: 'Plain', text: '' }
+ * 图片消息：{ type: 'Image', url: '' }
  * @param { int } groupNumber: 群号
  * @param { int } port: 端口号
  * @param { string } session
- * @param { string } msg: 发送信息
+ * @param { string | Array<object> } msg: 发送信息
  */
 export function requestSendGroupMessage(groupNumber, port, session, msg) {
+  const messageChain = typeof msg === 'string' ? [{ type: 'Plain', text: msg }] : msg;
+
   return request(`http://localhost:${ port }/sendGroupMessage`, {
     method: 'POST',
     headers: {
@@ -58,7 +61,29 @@ export function requestSendGroupMessage(groupNumber, port, session, msg) {
       sessionKey: session,
       target: groupNumber,
       group: groupNumber,
-      messageChain: [{ type: 'Plain', text: msg }]
+      messageChain
+    }
+  });
+}
+
+/**
+ * 发送图片
+ * @param { int } groupNumber: 群号
+ * @param { int } port: 端口号
+ * @param { string } session
+ * @param { Array<string> } urls: 发送图片
+ */
+export function requestSendGroupImageMessage(groupNumber, port, session, urls) {
+  return request(`http://localhost:${ port }/sendImageMessage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    },
+    json: {
+      sessionKey: session,
+      target: groupNumber,
+      group: groupNumber,
+      urls
     }
   });
 }
