@@ -44,6 +44,7 @@ export function requestRelease(qq, port, session) {
  * 发送群消息
  * 文字消息：{ type: 'Plain', text: '' }
  * 图片消息：{ type: 'Image', url: '' }
+ * At: { type: 'At', target: 123456, display: '@B.B.K.K.B.K.K' }
  * @param { int } groupNumber: 群号
  * @param { int } port: 端口号
  * @param { string } session

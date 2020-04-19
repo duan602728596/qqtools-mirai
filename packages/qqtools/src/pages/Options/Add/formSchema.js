@@ -1,8 +1,7 @@
 import style from './add.sass';
 
-const $formItemProps = {
-  className: style.formItem
-};
+const $formItemProps = { className: style.formItem },
+  $formItemProps1 = { className: style.formItem1 };
 
 const schema = {
   id: '$root',
@@ -62,7 +61,8 @@ const schema = {
           type: 'number',
           title: '轮询间隔',
           minimum: 30,
-          $defaultValue: 45
+          $defaultValue: 45,
+          $formItemProps
         },
         bilibiliLive: {
           id: '$root/properties/bilibili/properties/bilibiliLive',
@@ -121,7 +121,8 @@ const schema = {
           type: 'number',
           title: '轮询间隔',
           minimum: 30,
-          $defaultValue: 45
+          $defaultValue: 45,
+          $formItemProps
         },
         container: {
           id: '$root/properties/weibo/properties/container',
@@ -157,6 +158,27 @@ const schema = {
               }
             }
           }
+        }
+      }
+    },
+    welcome: {
+      id: '$root/properties/welcome',
+      type: 'object',
+      title: '群欢迎功能',
+      description: '群欢迎配置',
+      properties: {
+        use: {
+          id: '$root/properties/welcome/properties/use',
+          type: 'boolean',
+          title: '是否开启群欢迎功能',
+          $defaultValue: true,
+          $formItemProps: $formItemProps1
+        },
+        welcomeMessage: {
+          id: '$root/properties/welcome/properties/welcomeMessage',
+          type: 'string',
+          title: '群欢迎信息',
+          $componentType: 'textArea'
         }
       }
     }

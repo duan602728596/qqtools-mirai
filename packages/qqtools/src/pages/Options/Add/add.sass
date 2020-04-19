@@ -1,12 +1,18 @@
-.formItem
+.formItem, .formItem1
   display: flex
   flex-direction: row !important
 
-  \:global
-    .ant-form-item-label
-      width: 100px
-      flex-grow: 0
-      flex-shrink: 0
+  \:global(.ant-form-item-label)
+    flex-grow: 0
+    flex-shrink: 0
+
+.formItem :global(.ant-form-item-label)
+  width: 100px
+
+.formItem1 :global(.ant-form-item-label)
+  position: relative
+  top: 5px
+  width: 135px
 
 /* Add的布局 */
 .main

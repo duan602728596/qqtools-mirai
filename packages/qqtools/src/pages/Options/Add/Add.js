@@ -6,6 +6,7 @@ import SchemaForm from 'antd-schema-form/es/SchemaForm';
 import {
   defaultString,
   defaultNumber,
+  defaultBoolean,
   defaultObject,
   defaultArray,
   textArea,
@@ -69,6 +70,7 @@ function Add(props) {
           customComponent={{
             defaultString,
             defaultNumber,
+            defaultBoolean,
             defaultObject,
             defaultArray,
             textArea,
