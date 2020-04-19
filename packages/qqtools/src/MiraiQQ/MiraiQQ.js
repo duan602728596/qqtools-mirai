@@ -9,6 +9,7 @@ import {
   requestSendGroupMessage,
   requestInfoByRoom
 } from './services/services';
+import miraiTemplate from './function/miraiTemplate';
 
 nunjucks.configure({
   autoescape: false
