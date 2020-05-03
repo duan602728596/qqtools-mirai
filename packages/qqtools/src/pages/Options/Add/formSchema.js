@@ -88,15 +88,6 @@ const schema = {
                 $required: true,
                 $tableColumnHidden: true
               },
-              msgTemplate: {
-                id: '$root/properties/bilibili/properties/bilibiliLive/items/properties/msgTemplate',
-                type: 'string',
-                title: '推送消息模版',
-                $required: true,
-                $componentType: 'textArea',
-                $defaultValue: '{{ name }} 在B站开启了直播。',
-                $tableColumnHidden: true
-              },
               use: {
                 id: '$root/properties/bilibili/properties/bilibiliLive/items/properties/use',
                 type: 'boolean',
