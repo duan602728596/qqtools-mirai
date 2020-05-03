@@ -1,5 +1,6 @@
 import process from 'process';
 import path from 'path';
+import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
 
 // 配置nodejs的外部扩展
 function nodeExternals(externals) {
@@ -76,6 +77,9 @@ export default function(info) {
     },
     html: [
       { template: path.join(__dirname, 'src/index.pug') }
+    ],
+    plugins: [
+      new AntdDayjsWebpackPlugin()
     ]
   };
 }

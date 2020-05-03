@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { orderBy } from 'lodash-es';
 import { requestWeiboContainer } from './services/worker';
 
@@ -23,7 +23,7 @@ function timeStringParse(timeStr) {
    * 字符串为刚刚时，返回当前时间
    */
   if (timeStr === '刚刚') {
-    return moment().valueOf();
+    return dayjs().valueOf();
   }
 
   /**
@@ -31,7 +31,7 @@ function timeStringParse(timeStr) {
    */
   if (/秒(前)?/.test(timeStr)) {
     const amount = Number(timeStr.match(/[0-9]+/)[0]);
-    const time = moment().subtract(amount, 'seconds');
+    const time = dayjs().subtract(amount, 'seconds');
 
     return time.valueOf();
   }
@@ -41,7 +41,7 @@ function timeStringParse(timeStr) {
    */
   if (/分(钟前)?/.test(timeStr)) {
     const amount = Number(timeStr.match(/[0-9]+/)[0]);
-    const time = moment().subtract(amount, 'minutes');
+    const time = dayjs().subtract(amount, 'minutes');
 
     return time.valueOf();
   }
@@ -51,7 +51,7 @@ function timeStringParse(timeStr) {
    */
   if (/小?时前?/.test(timeStr)) {
     const amount = Number(timeStr.match(/[0-9]+/)[0]);
-    const time = moment().subtract(amount, 'hours');
+    const time = dayjs().subtract(amount, 'hours');
 
     return time.valueOf();
   }
@@ -61,7 +61,7 @@ function timeStringParse(timeStr) {
    */
   if (/昨天/.test(timeStr)) {
     const timeArr = timeStr.match(/[0-9]+/g);
-    const time = moment();
+    const time = dayjs();
 
     const HH = Number(timeArr[0]);
     const mm = Number(timeArr[1]);
@@ -79,7 +79,7 @@ function timeStringParse(timeStr) {
    */
   if (/^[0-9]{1,2}-[0-9]{1,2}$/.test(timeStr)) {
     const timeArr = timeStr.match(/[0-9]+/g);
-    const time = moment();
+    const time = dayjs();
 
     const MM = Number(timeArr[0] - 1);
     const DD = Number(timeArr[1]);
@@ -95,7 +95,7 @@ function timeStringParse(timeStr) {
    */
   if (/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/.test(timeStr)) {
     const timeArr = timeStr.match(/[0-9]+/g);
-    const time = moment();
+    const time = dayjs();
 
     const YYYY = Number(timeArr[0]);
     const MM = Number(timeArr[1] - 1);
