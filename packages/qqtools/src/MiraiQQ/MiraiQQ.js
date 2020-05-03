@@ -81,14 +81,16 @@ class MiraiQQ {
     try {
       const cfg = event.data.config;
       const { basic } = this.config;
-      const msg = nunjucks.renderString('B站直播通知：{{ name }} 在B站开启了直播。', { name: cfg.name });
-      const sendArr = [{ type: 'Plain', text: msg }];
+      const msg = nunjucks.renderString(
+        `${ cfg.atAll ? ' ' : '' }B站直播通知：{{ name }} 在B站开启了直播。`,
+        { name: cfg.name });
+      const msgArr = [{ type: 'Plain', text: msg }];
 
       if (cfg.atAll) {
-        sendArr.unshift({ type: 'AtAll', target: 0 });
+        msgArr.unshift({ type: 'AtAll', target: 0 });
       }
 
-      await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, sendArr);
+      await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msgArr);
     } catch (err) {
       console.error(err);
     }
@@ -123,10 +125,15 @@ class MiraiQQ {
     const { basic } = this.config;
 
     for (const item of result) {
-      const msg = nunjucks.renderString(`{{ name }} {{ time }}发送了一条微博：{{ text }}
+      const msg = nunjucks.renderString(
+        `${ cfg.atAll ? ' ' : '' }{{ name }} {{ time }}发送了一条微博：{{ text }}
 类型：{{ type }}
 地址：{{ scheme }}`, item);
       const msgArr = [{ type: 'Plain', text: msg }];
+
+      if (item.atAll) {
+        msgArr.unshift({ type: 'AtAll', target: 0 });
+      }
 
       if (item.pics.length > 0) {
         msgArr.push({

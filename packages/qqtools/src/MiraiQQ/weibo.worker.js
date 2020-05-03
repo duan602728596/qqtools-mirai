@@ -126,7 +126,7 @@ function filterCards(cards) {
     .map((item, index) => {
       return Object.assign(item, { _time: timeStringParse(item.mblog.created_at) });
     }),
-  ['_time'], ['desc']);
+  ['_time'], ['asc']);
 }
 
 async function handleQueryTimer() {
@@ -148,7 +148,7 @@ async function handleQueryTimer() {
           .filter((o) => {
             const cardId = BigInt(o.mblog.id);
 
-            return id[index] && cardId > id[index];
+            return id[index] && (cardId > id[index]);
           })
           .map((item, index) => {
             const mblog = item.mblog;
@@ -160,7 +160,8 @@ async function handleQueryTimer() {
               scheme: item.scheme,
               time: mblog.created_at === '刚刚' ? mblog.created_at : ('在' + mblog.created_at),
               text: mblog.text.replace(/<[^<>]+>/g, ' '),
-              pics: (mblog.pics ?? []).map((item) => item.url)
+              pics: (mblog.pics ?? []).map((item) => item.url),
+              atAll: config[index].atAll
             };
           })
       ));
