@@ -15,24 +15,24 @@
   ],
   "dependencies": {
     "cross-env": "^7.0.2",
-    "electron": "8.2.1",
+    "electron": "8.2.5",
     "lerna": "^3.20.2",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@sweet-milktea/milktea": "^0.15.2",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@sweet-milktea/milktea": "^0.15.4",
     "@sweet-milktea/milktea-cli": "^0.14.0",
     "@sweet-milktea/util-tools": "^0.15.0",
     "babel-eslint": "^11.0.0-beta.2",
-    "commitizen": "^4.0.4",
+    "commitizen": "^4.0.5",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^7.0.0-alpha.3",
     "eslint-plugin-react": "^7.19.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.1.1"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2"
   },
   "husky": {
     "hooks": {
