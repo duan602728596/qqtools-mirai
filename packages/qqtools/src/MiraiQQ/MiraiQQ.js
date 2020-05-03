@@ -63,7 +63,35 @@ class MiraiQQ {
     const data = JSON.parse(event.data);
 
     console.log(data);
+
+    // 新人入群
+    if (data.type === 'MemberJoinEvent') {
+      this.welcomeNewHuman(data.member.id, data.member.memberName);
+    }
   };
+
+  /**
+   * 欢迎新人入群
+   * @param { number } id
+   * @param { string } memberName
+   */
+  async welcomeNewHuman(id, memberName) {
+    const { basic, welcome } = this.config;
+
+    if (!(welcome && welcome.use)) return;
+
+    const msg = nunjucks.renderString(welcome.welcomeMessage ?? '', {
+      name: memberName
+    });
+    const msgArr = miraiTemplate(msg, {
+      qqNumber: id,
+      name: memberName
+    });
+
+    console.log(msgArr);
+
+    await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msgArr);
+  }
 
   // 初始化websocket
   initWebSocket() {

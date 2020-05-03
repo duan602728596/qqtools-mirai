@@ -5,9 +5,12 @@
  *       at，at人 <%= qqtools: at, 淡忘一切 %>
  *       atAll，at全体成员 <%= qqtools:atAll %>
  * @param { string } message: 信息
- * @param { number } qqNumber: qq号
+ * @param { object } options: 信息
+ * @param { number } options.qqNumber: qq号
+ * @param { string } options.name: 用户名
+ * @return { Array<object> }
  */
-function miraiTemplate(message, qqNumber) {
+function miraiTemplate(message, options) {
   const msgArr = message.split('');
   const result = [];
   let cache = '';
@@ -58,7 +61,7 @@ function miraiTemplate(message, qqNumber) {
         delete value.text;
       } else if (type === 'at') {
         value.type = 'At';
-        value.target = qqNumber;
+        value.target = options.qqNumber;
         value.display = str;
         delete value.text;
       } else if (type === 'atAll') {

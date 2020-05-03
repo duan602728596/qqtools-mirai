@@ -183,7 +183,8 @@ const schema = {
           id: '$root/properties/welcome/properties/welcomeMessage',
           type: 'string',
           title: '群欢迎信息',
-          $componentType: 'textArea'
+          $componentType: 'textArea',
+          $defaultValue: '欢迎 <%= qqtools: at, {{ id }} %> 入群。'
         }
       }
     }
