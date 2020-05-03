@@ -95,6 +95,13 @@ const schema = {
                 $defaultValue: true,
                 $componentType: 'switch',
                 $tableColumnHidden: true
+              },
+              atAll: {
+                id: '$root/properties/bilibili/properties/bilibiliLive/items/properties/atAll',
+                type: 'boolean',
+                title: '推送时at全体成员',
+                $componentType: 'switch',
+                $tableColumnHidden: true
               }
             }
           }
@@ -144,6 +151,13 @@ const schema = {
                 type: 'boolean',
                 title: '开启推送',
                 $defaultValue: true,
+                $componentType: 'switch',
+                $tableColumnHidden: true
+              },
+              atAll: {
+                id: '$root/properties/weibo/properties/container/items/properties/atAll',
+                type: 'boolean',
+                title: '推送时at全体成员',
                 $componentType: 'switch',
                 $tableColumnHidden: true
               }

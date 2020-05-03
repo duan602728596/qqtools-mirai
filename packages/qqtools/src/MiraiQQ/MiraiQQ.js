@@ -82,8 +82,13 @@ class MiraiQQ {
       const cfg = event.data.config;
       const { basic } = this.config;
       const msg = nunjucks.renderString('B站直播通知：{{ name }} 在B站开启了直播。', { name: cfg.name });
+      const sendArr = [{ type: 'Plain', text: msg }];
 
-      await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msg);
+      if (cfg.atAll) {
+        sendArr.unshift({ type: 'AtAll', target: 0 });
+      }
+
+      await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, sendArr);
     } catch (err) {
       console.error(err);
     }
@@ -173,7 +178,8 @@ class MiraiQQ {
   async destroy() {
     try {
       const { basic } = this.config;
-      const { data } = await requestRelease(basic.qqNumber, basic.port, this.session); // 清除sessicon
+
+      await requestRelease(basic.qqNumber, basic.port, this.session); // 清除sessicon
 
       // 关闭websocket
       if (this.messageSocket) {

@@ -15,7 +15,8 @@ async function handleQueryTimer() {
       if (status && status[index] !== 1 && value.data.data.live_status === 1) {
         postMessage({
           config: {
-            name: info?.[index] ?? config[index].name
+            name: info?.[index] ?? config[index].name,
+            atAll: config[index].atAll
           }
         });
       }
