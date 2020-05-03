@@ -88,8 +88,6 @@ class MiraiQQ {
       name: memberName
     });
 
-    console.log(msgArr);
-
     await requestSendGroupMessage(basic.groupNumber, basic.port, this.session, msgArr);
   }
 
