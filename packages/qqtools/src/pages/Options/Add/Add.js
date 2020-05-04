@@ -12,7 +12,7 @@ import {
   textArea,
   switchComponent
 } from 'antd-schema-form/es/components/custom/custom';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import style from './add.sass';
 import schema from './formSchema';
 import { randomId } from '../../../utils/utils';
@@ -44,7 +44,7 @@ function Add(props) {
     await dispatch(saveQqOption({
       data: {
         id: params.id ?? randomId(30),
-        time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        time: moment().format('YYYY-MM-DD HH:mm:ss'),
         value: value.$root
       }
     }));
