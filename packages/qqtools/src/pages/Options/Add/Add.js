@@ -14,7 +14,7 @@ import {
 } from 'antd-schema-form/es/components/custom/custom';
 import moment from 'moment';
 import style from './add.sass';
-import schema from './formSchema';
+import schema from './formSchema/formSchema';
 import { randomId } from '../../../utils/utils';
 import { saveQqOption, getQQOptionById } from '../models/models';
 import BilibiliLiveIdSearch from './BilibiliLiveIdSearch';
